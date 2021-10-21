@@ -1,12 +1,27 @@
+import { RouteComponentProps, Router } from "@reach/router"
 import React from "react"
 import ReactDOM from "react-dom"
-import "./index.css"
 import App from "./App"
+import DetailsPage from "./DetailsPage"
+import "./index.css"
 import reportWebVitals from "./reportWebVitals"
+
+const Home: React.FC<RouteComponentProps> = () => {
+  return <App />
+}
+
+const Details: React.FC<RouteComponentProps> = () => {
+  return <DetailsPage />
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Home path="/" />
+      <Details path="/country/:name" />
+    </Router>
+
+    {/* <App /> */}
   </React.StrictMode>,
   document.getElementById("root")
 )

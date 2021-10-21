@@ -92,11 +92,6 @@ p {
   
 }
 
-.search svg {
-  fill: red;
-}
-
-
 .dropdown {
   box-shadow:  -2px 2px 15px lightgray;
   border: 0;
@@ -120,8 +115,18 @@ p {
   flex: 1;
   border-radius: 10px;
   overflow: hidden;
+  border: 0;
+  padding: 0;
+  text-transform: none;
+  text-decoration: none;
+  color: var(--light-mode-text);
   background-color: var(--light-mode-elements);
   box-shadow:  -2px 2px 15px lightgray
+}
+
+.country-item:hover {
+  box-shadow:  -8px 10px 10px lightgray;
+  cursor: pointer;
 }
 
 .country-flag {

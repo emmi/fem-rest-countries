@@ -1,3 +1,4 @@
+import { Link } from "@reach/router"
 import React, { Component } from "react"
 import { get } from "./api"
 import "./App.css"
@@ -8,6 +9,7 @@ interface Country {
   region: string
   // subregion: string
   capital: string
+  alpha3Code: string
 
   flags: {
     svg: string
@@ -43,14 +45,15 @@ export default class App extends Component {
 
     const countries = response
       ? response.map(r => {
-          const { name, population, region, capital, flags } = r
+          const { name, population, region, capital, flags, alpha3Code } = r
 
           return {
             name,
             population,
             region,
             capital,
-            flags
+            flags,
+            alpha3Code
           }
         })
       : []
@@ -67,10 +70,12 @@ export default class App extends Component {
 
     this.setState({
       search: {
-        timeout: setTimeout(
-          () => this.getCountries(`/name/${e.target.value}`),
-          1000
-        )
+        timeout: setTimeout(() => {
+          const path =
+            e.target.value.length === 0 ? "/all" : `/name/${e.target.value}`
+
+          this.getCountries(path)
+        }, 1000)
       }
     })
   }
@@ -94,10 +99,15 @@ export default class App extends Component {
 
         <div className="list">
           {this.state.countries.map(country => {
-            const { name, population, region, capital, flags } = country
+            const { name, alpha3Code, population, region, capital, flags } =
+              country
 
             return (
-              <div className="country-item" key={country.name}>
+              <Link
+                className="country-item"
+                key={name}
+                to={`country/${alpha3Code}`}
+              >
                 <img
                   className="country-flag"
                   src={flags.svg}
@@ -109,7 +119,7 @@ export default class App extends Component {
                   {this.property("Region", region)}
                   {this.property("Capital", capital)}
                 </div>
-              </div>
+              </Link>
             )
           })}
         </div>
