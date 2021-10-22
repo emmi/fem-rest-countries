@@ -1,8 +1,14 @@
 import { Component } from 'react';
+import './DetailsPage.css';
+import './App.css';
 import { get } from './api';
+import { TopBar } from './TopBar';
+import { Link } from '@reach/router';
+import { Value } from './Value';
 
 interface Country {
   name: string;
+  nativeName: string;
   population: number;
   region: string;
   subregion: string;
@@ -54,9 +60,61 @@ export default class DetailsPage extends Component {
   }
 
   render() {
+    if (this.state.country === null) {
+      return <p>Haetaan</p>;
+    }
+
+    const {
+      capital,
+      currencies,
+      flags,
+      languages,
+      name,
+      nativeName,
+      population,
+      region,
+      subregion
+    } = this.state.country;
+
     return (
-      <div>
-        <p>Hello! {this.state.country?.name}</p>
+      <div className="page">
+        <TopBar />
+
+        <div className="toolbar">
+          <Link className="back-button" to={'/'}>
+            Back
+          </Link>
+        </div>
+
+        <div className="details">
+          <div className="flag-container">
+            <img src={flags.svg} alt={`Flag of ${name}`} />
+          </div>
+          <div className="details-content">
+            <h2>{name}</h2>
+
+            <div className="details-columns">
+              <div className="column">
+                <Value label="Native name" value={nativeName} />
+                <Value label="Population" value={population} />
+                <Value label="Region" value={region} />
+                <Value label="Sub Region" value={subregion} />
+                <Value label="Capital" value={capital} />
+              </div>
+              <div className="column">
+                <Value label="Top Level Domain" value={name} />
+                <Value
+                  label="Currencies"
+                  value={currencies.map(currency => currency.name).join(', ')}
+                />
+                <Value
+                  label="Languages"
+                  value={languages.map(language => language.name).join(', ')}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
