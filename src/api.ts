@@ -1,11 +1,6 @@
-import axios, { AxiosRequestConfig } from "axios"
+import axios, { AxiosRequestConfig } from "axios";
 
-const API_ROOT = "https://restcountries.com/v2"
-
-interface TError {
-  status: number
-  message: string
-}
+const API_ROOT = "https://restcountries.com/v2";
 
 export async function get<TResponse = any>(
   url: string,
@@ -14,14 +9,14 @@ export async function get<TResponse = any>(
   try {
     const response: any = await axios.get(`${API_ROOT}${url}`, {
       params: { ...params }
-    })
+    });
 
     if (!!response.data.status && response.data.status === 404) {
-      return
+      return;
     }
 
-    return response.data as TResponse
+    return response.data as TResponse;
   } catch (err) {
-    console.error(`Error with the API request -> ${err}`)
+    console.error(`Error with the API request -> ${err}`);
   }
 }
