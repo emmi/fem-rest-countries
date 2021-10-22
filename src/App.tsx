@@ -1,31 +1,31 @@
-import { Link } from "@reach/router"
-import React, { Component } from "react"
-import { get } from "./api"
-import "./App.css"
+import { Link } from "@reach/router";
+import React from "react";
+import "./App.css";
+import { get } from "./api";
 
 interface Country {
-  name: string
-  population: number
-  region: string
+  name: string;
+  population: number;
+  region: string;
   // subregion: string
-  capital: string
-  alpha3Code: string
+  capital: string;
+  alpha3Code: string;
 
   flags: {
-    svg: string
-    png: string
-  }
+    svg: string;
+    png: string;
+  };
 }
 
 type State = {
-  countries: Country[]
+  countries: Country[];
   search: {
-    input: string
-    typing: boolean
-    timeout: any //TODO:
-  }
-}
-export default class App extends Component {
+    input: string;
+    typing: boolean;
+    timeout: any; //TODO:
+  };
+};
+export default class App extends React.Component {
   state: State = {
     countries: [],
 
@@ -34,18 +34,18 @@ export default class App extends Component {
       typing: false,
       timeout: 0
     }
-  }
+  };
 
   componentDidMount() {
-    this.getCountries("/all")
+    this.getCountries("/all");
   }
 
   async getCountries(path: string) {
-    const response = await get<Country[]>(path)
+    const response = await get<Country[]>(path);
 
     const countries = response
       ? response.map(r => {
-          const { name, population, region, capital, flags, alpha3Code } = r
+          const { name, population, region, capital, flags, alpha3Code } = r;
 
           return {
             name,
@@ -54,30 +54,30 @@ export default class App extends Component {
             capital,
             flags,
             alpha3Code
-          }
+          };
         })
-      : []
+      : [];
 
-    this.setState({ countries })
+    this.setState({ countries });
   }
 
   onChange(e: any) {
-    e.preventDefault()
+    e.preventDefault();
 
     if (this.state.search.timeout) {
-      clearTimeout(this.state.search.timeout)
+      clearTimeout(this.state.search.timeout);
     }
 
     this.setState({
       search: {
         timeout: setTimeout(() => {
           const path =
-            e.target.value.length === 0 ? "/all" : `/name/${e.target.value}`
+            e.target.value.length === 0 ? "/all" : `/name/${e.target.value}`;
 
-          this.getCountries(path)
+          this.getCountries(path);
         }, 1000)
       }
-    })
+    });
   }
 
   render() {
@@ -100,7 +100,7 @@ export default class App extends Component {
         <div className="list">
           {this.state.countries.map(country => {
             const { name, alpha3Code, population, region, capital, flags } =
-              country
+              country;
 
             return (
               <Link
@@ -120,11 +120,11 @@ export default class App extends Component {
                   {this.property("Capital", capital)}
                 </div>
               </Link>
-            )
+            );
           })}
         </div>
       </div>
-    )
+    );
   }
 
   property(label: string, value: string | number) {
@@ -132,6 +132,6 @@ export default class App extends Component {
       <p className="country-property">
         {label}: <span className="label">{value}</span>
       </p>
-    )
+    );
   }
 }
