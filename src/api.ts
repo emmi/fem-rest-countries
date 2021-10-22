@@ -1,10 +1,10 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig } from 'axios';
 
-const API_ROOT = "https://restcountries.com/v2";
+const API_ROOT = 'https://restcountries.com/v2';
 
 export async function get<TResponse = any>(
   url: string,
-  params: AxiosRequestConfig["params"] = {}
+  params: AxiosRequestConfig['params'] = {}
 ): Promise<TResponse | undefined> {
   try {
     const response: any = await axios.get(`${API_ROOT}${url}`, {

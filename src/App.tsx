@@ -1,7 +1,7 @@
-import { Link } from "@reach/router";
-import React from "react";
-import "./App.css";
-import { get } from "./api";
+import { Link } from '@reach/router';
+import React from 'react';
+import './App.css';
+import { get } from './api';
 
 interface Country {
   name: string;
@@ -30,14 +30,14 @@ export default class App extends React.Component {
     countries: [],
 
     search: {
-      input: "",
+      input: '',
       typing: false,
       timeout: 0
     }
   };
 
   componentDidMount() {
-    this.getCountries("/all");
+    this.getCountries('/all');
   }
 
   async getCountries(path: string) {
@@ -72,7 +72,7 @@ export default class App extends React.Component {
       search: {
         timeout: setTimeout(() => {
           const path =
-            e.target.value.length === 0 ? "/all" : `/name/${e.target.value}`;
+            e.target.value.length === 0 ? '/all' : `/name/${e.target.value}`;
 
           this.getCountries(path);
         }, 1000)
@@ -86,7 +86,6 @@ export default class App extends React.Component {
         <div className="header">
           <h1 className="title">Where in the world?</h1>
         </div>
-
         <div className="toolbar">
           <input
             type="text"
@@ -115,9 +114,9 @@ export default class App extends React.Component {
                 />
                 <div className="country-info">
                   <h2 className="country-name">{name}</h2>
-                  {this.property("Population", population)}
-                  {this.property("Region", region)}
-                  {this.property("Capital", capital)}
+                  {this.property('Population', population)}
+                  {this.property('Region', region)}
+                  {this.property('Capital', capital)}
                 </div>
               </Link>
             );
