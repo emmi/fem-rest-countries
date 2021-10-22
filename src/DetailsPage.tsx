@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import './DetailsPage.css';
 import './App.css';
 import { get } from './api';
 import { TopBar } from './TopBar';
@@ -14,6 +13,7 @@ interface Country {
   subregion: string;
   capital: string;
   alpha3Code: string;
+  topLevelDomain: string;
 
   flags: {
     svg: string;
@@ -73,7 +73,8 @@ export default class DetailsPage extends Component {
       nativeName,
       population,
       region,
-      subregion
+      subregion,
+      topLevelDomain
     } = this.state.country;
 
     return (
@@ -102,7 +103,7 @@ export default class DetailsPage extends Component {
                 <Value label="Capital" value={capital} />
               </div>
               <div className="column">
-                <Value label="Top Level Domain" value={name} />
+                <Value label="Top Level Domain" value={topLevelDomain} />
                 <Value
                   label="Currencies"
                   value={currencies.map(currency => currency.name).join(', ')}
