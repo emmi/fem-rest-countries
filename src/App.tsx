@@ -2,6 +2,8 @@ import { Link } from '@reach/router';
 import React from 'react';
 import './App.css';
 import { get } from './api';
+import { TopBar } from './TopBar';
+import { Value } from './Value';
 
 interface Country {
   name: string;
@@ -83,9 +85,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="page">
-        <div className="header">
-          <h1 className="title">Where in the world?</h1>
-        </div>
+        <TopBar />
         <div className="toolbar">
           <input
             type="text"
@@ -96,7 +96,7 @@ export default class App extends React.Component {
           <button className="dropdown">Filter by region </button>
         </div>
 
-        <div className="list">
+        <div className="content">
           {this.state.countries.map(country => {
             const { name, alpha3Code, population, region, capital, flags } =
               country;
@@ -114,23 +114,16 @@ export default class App extends React.Component {
                 />
                 <div className="country-info">
                   <h2 className="country-name">{name}</h2>
-                  {this.property('Population', population)}
-                  {this.property('Region', region)}
-                  {this.property('Capital', capital)}
+
+                  <Value label="Population" value={population} />
+                  <Value label="Region" value={region} />
+                  <Value label="Capital" value={capital} />
                 </div>
               </Link>
             );
           })}
         </div>
       </div>
-    );
-  }
-
-  property(label: string, value: string | number) {
-    return (
-      <p className="country-property">
-        {label}: <span className="label">{value}</span>
-      </p>
     );
   }
 }
