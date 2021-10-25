@@ -7,7 +7,24 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root {
+  height: 100%;
+}
+
+/* Light mode colors */
+.light-theme {
+  --elements: hsl(0, 0%, 100%);
+  --background: hsl(0, 0%, 98%);
+  --text: hsl(00, 15%, 8%);
+  --input: hsl(0, 0%, 52%);
+  --shadow: lightgray;
+}
+
+/* Dark mode colors */
+.dark-theme {
+  --elements: hsl(209, 23%, 22%);
+  --background: hsl(207, 26%, 17%);
+  --text: hsl(0, 0%, 100%);
+  --input: red;
+  --shadow: #080808;
 }

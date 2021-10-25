@@ -1,41 +1,12 @@
 import { Component } from 'react';
 import './App.css';
 import { get } from './api';
-import { TopBar } from './TopBar';
 import { Link } from '@reach/router';
 import { Value } from './Value';
-
-interface Country {
-  name: string;
-  nativeName: string;
-  population: number;
-  region: string;
-  subregion: string;
-  capital: string;
-  alpha3Code: string;
-  topLevelDomain: string;
-
-  flags: {
-    svg: string;
-    png: string;
-  };
-
-  languages: Language[];
-  currencies: Currency[];
-}
-
-interface Currency {
-  code: string;
-  name: string;
-  symbol: string;
-}
-
-interface Language {
-  name: string;
-}
+import { DetailedCountry } from './types';
 
 type State = {
-  country: Country | null;
+  country: DetailedCountry | null;
 };
 
 export default class DetailsPage extends Component {
@@ -54,13 +25,14 @@ export default class DetailsPage extends Component {
   }
 
   async getCountry(code: string) {
-    const response = await get<Country>(`/alpha/${code}`);
+    const response = await get<DetailedCountry>(`/alpha/${code}`);
 
     this.setState({ country: response ? response : null });
   }
 
   render() {
     if (this.state.country === null) {
+      // TODO: loading spinner
       return <p>Haetaan</p>;
     }
 
@@ -79,8 +51,6 @@ export default class DetailsPage extends Component {
 
     return (
       <div className="page">
-        <TopBar />
-
         <div className="toolbar">
           <Link className="back-button" to={'/'}>
             Back
