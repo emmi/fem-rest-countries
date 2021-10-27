@@ -3,31 +3,57 @@ import './App.css';
 import { get } from './api';
 import { Link, RouteComponentProps } from '@reach/router';
 import { Value } from './Value';
-import { DetailedCountry } from './types';
+import { BorderCountry, DetailedCountry } from './types';
 
 type State = {
   country: DetailedCountry | null;
+  borderCountries: BorderCountry[];
 };
 
 export default class DetailsPage extends Component<RouteComponentProps> {
   state: State = {
-    country: null
+    country: null,
+    borderCountries: []
   };
 
   componentDidMount() {
-    const paths = window.location.pathname.split('/');
-
-    const countryCode = paths.pop();
-
-    if (countryCode) {
-      this.getCountry(countryCode);
-    }
+    this.getCountry();
   }
 
-  async getCountry(code: string) {
-    const response = await get<DetailedCountry>(`/alpha/${code}`);
+  componentDidUpdate(props: any) {
+    this.getCountry();
+  }
 
-    this.setState({ country: response ? response : null });
+  async getCountry() {
+    const paths = window.location.pathname.split('/');
+    const code = paths.pop();
+
+    if (code && this.state.country?.alpha3Code !== code) {
+      const countryResponse = await get<DetailedCountry>(`/alpha/${code}`);
+
+      if (
+        countryResponse &&
+        countryResponse.borders &&
+        countryResponse.borders.length > 0
+      ) {
+        const borderCountryString = countryResponse?.borders.join(',');
+        const query = {
+          codes: borderCountryString,
+          fields: 'name,alpha3Code'
+        };
+
+        const borderCountryResponse = await get<BorderCountry>(`/alpha`, query);
+
+        this.setState({
+          country: countryResponse ?? null,
+          borderCountries: borderCountryResponse ?? null
+        });
+      } else {
+        this.setState({
+          country: countryResponse ?? null
+        });
+      }
+    }
   }
 
   render() {
@@ -37,17 +63,20 @@ export default class DetailsPage extends Component<RouteComponentProps> {
     }
 
     const {
-      capital,
-      currencies,
-      flags,
-      languages,
-      name,
-      nativeName,
-      population,
-      region,
-      subregion,
-      topLevelDomain
-    } = this.state.country;
+      country: {
+        capital,
+        currencies,
+        flags,
+        languages,
+        name,
+        nativeName,
+        population,
+        region,
+        subregion,
+        topLevelDomain
+      },
+      borderCountries
+    } = this.state;
 
     return (
       <div className="page">
@@ -84,6 +113,25 @@ export default class DetailsPage extends Component<RouteComponentProps> {
                 />
               </div>
             </div>
+
+            {borderCountries.length > 0 && (
+              <div className="border-country-container">
+                <p>Border countries</p>
+                <div className="border-country-links">
+                  {borderCountries.map(country => {
+                    return (
+                      <Link
+                        className="border-country-link"
+                        key={country.name}
+                        to={`/country/${country.alpha3Code}`}
+                      >
+                        {country.name}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

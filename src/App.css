@@ -29,7 +29,9 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p,
+span {
   color: var(--text);
 }
 
@@ -181,7 +183,7 @@ p {
   display: grid;
   grid-template-columns: 3fr 5fr;
   grid-template-rows: 450px;
-  grid-gap: 20px;
+  gap: 20px;
 }
 
 .flag-container {
@@ -203,5 +205,33 @@ p {
 .details-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
+  gap: 20px;
+}
+
+.border-country-container {
+  display: flex;
+  margin-top: 2em;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.border-country-container p {
+  margin: 0 15px 0 0;
+  width: auto;
+  font-weight: var(--bold);
+  font-size: var(--small-font);
+}
+
+.border-country-links {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  gap: 10px;
+}
+.border-country-link {
+  box-shadow: -1px 1px 5px var(--shadow);
+  padding: 5px 15px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: var(--small-font);
+  text-align: center;
 }

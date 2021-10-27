@@ -24,6 +24,8 @@ export interface DetailedCountry extends Country {
 
   languages: Language[];
   currencies: Currency[];
+
+  borders: string[];
 }
 
 interface Currency {
@@ -34,4 +36,9 @@ interface Currency {
 
 interface Language {
   name: string;
+}
+
+export interface BorderCountry {
+  name: string;
+  alpha3Code: string;
 }
