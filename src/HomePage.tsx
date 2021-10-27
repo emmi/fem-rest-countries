@@ -1,4 +1,4 @@
-import { Link } from '@reach/router';
+import { Link, RouteComponentProps } from '@reach/router';
 import React from 'react';
 import './App.css';
 import { get } from './api';
@@ -14,7 +14,7 @@ type State = {
   };
 };
 
-export default class HomePage extends React.Component {
+export default class HomePage extends React.Component<RouteComponentProps> {
   state: State = {
     countries: [],
 

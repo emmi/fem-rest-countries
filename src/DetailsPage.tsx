@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import './App.css';
 import { get } from './api';
-import { Link } from '@reach/router';
+import { Link, RouteComponentProps } from '@reach/router';
 import { Value } from './Value';
 import { DetailedCountry } from './types';
 
@@ -9,7 +9,7 @@ type State = {
   country: DetailedCountry | null;
 };
 
-export default class DetailsPage extends Component {
+export default class DetailsPage extends Component<RouteComponentProps> {
   state: State = {
     country: null
   };
